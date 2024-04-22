@@ -1,6 +1,5 @@
 
 from pydantic import BaseModel, Field
-from langchain_openai import ChatOpenAI
 from langchain.agents import Tool
 from langchain_community.vectorstores import FAISS
 from langchain_openai import OpenAIEmbeddings
