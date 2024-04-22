@@ -11,18 +11,6 @@ os.environ['llm']=os.getenv("OpenAI_model")
 llm = ChatOpenAI(temperature=0, model=os.getenv("OpenAI_model"))
 
 directory_path = "folder"
-
-def chatbot_interface(query):
-    try:
-        if query == '':
-            return ''
-        agent = admin_agent(directory_path,llm)
-        response = agent({"input":f"{query}"})
-        return response['output']
-    
-    except Exception as e:
-        print(f"An error occurred: {e}")
-        return "An error occurred while processing your request."
     
 def handler(query):
     try:
