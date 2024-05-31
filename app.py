@@ -19,11 +19,12 @@ def handler(query):
             return ''
         agent = admin_agent(directory_path,llm)
         response = agent({"input":f"{query}"})
-        return response['output']
+        return str(response['output'])
 
     except Exception as e:
         return st.error(f"An error occurred: {e}")
 
+# print(handler("Hi"))
 st.title("Chat with docs")
 
 user_query = st.text_input("You:")
