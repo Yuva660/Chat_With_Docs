@@ -6,7 +6,7 @@ from langchain_openai import OpenAIEmbeddings
 from langchain_text_splitters import CharacterTextSplitter
 from langchain_community.document_loaders import PyPDFLoader, Docx2txtLoader, TextLoader, CSVLoader, UnstructuredExcelLoader, UnstructuredPowerPointLoader
 from langchain.chains import RetrievalQA
-from langchain.agents import initialize_agent
+from langchain.agents import create_structured_chat_agent
 from langchain.agents import AgentType
 from langchain.memory import ConversationBufferMemory
 import os
@@ -57,17 +57,17 @@ def load_and_setup_tools(directory_path, llm):
 
 def admin_agent(directory_path,llm):
     try:
-        loaded_tools = load_and_setup_tools(directory_path)
+        loaded_tools = load_and_setup_tools(directory_path, llm)
 
         memory = ConversationBufferMemory(memory_key="chat_history",
                                         return_messages=True,
                                         output_key='output')
 
-        agent = initialize_agent(agent=AgentType.OPENAI_MULTI_FUNCTIONS,
-                                tools=loaded_tools,
-                                llm=llm,
-                                memory=memory,
-                                verbose=False)
+        agent = create_structured_chat_agent(agent=AgentType.OPENAI_MULTI_FUNCTIONS,
+                                             tools=loaded_tools,
+                                             llm=llm,
+                                             memory=memory,
+                                             verbose=False)
         return agent
     
     except Exception as e:
